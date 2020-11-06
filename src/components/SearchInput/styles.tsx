@@ -33,7 +33,7 @@ const Input = styled.input`
   margin: 0.5em 0;
   width: 100%;
   height: 100%;
-  background: #ffffff;
+  background: ${(props) => props.background};
   border: none;
   border-radius: 5px;
   transition: 0.3s ease-in;

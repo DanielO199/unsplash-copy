@@ -6,14 +6,12 @@ import { grayColor } from "assets/variables";
 interface ISpinner {
   color?: string;
   size?: string;
-  position?: string;
 }
 
-export const Spinner = ({ color = grayColor, size, position }: ISpinner) => (
+export const Spinner = ({ color = grayColor, size }: ISpinner) => (
   <div className="text-center" role="progressbar">
     <StyledIcon
       icon={faSpinner}
-      position={position}
       size={size || "2x"}
       spin={true}
       color={color}

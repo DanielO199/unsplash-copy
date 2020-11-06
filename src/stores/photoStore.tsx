@@ -8,6 +8,8 @@ class PhotoStore {
 
   relatedTerms: [] = [];
 
+  searchTerm: string = "";
+
   images: [] = [];
 
   constructor() {
@@ -20,10 +22,18 @@ class PhotoStore {
     });
   }
 
-  list(data) {
+  getSearchTerm(value) {
+    this.searchTerm = value;
+  }
+
+  list() {
     this.loading = true;
 
-    const params = { ...data, client_id: config.apiKey };
+    const params = {
+      query: this.searchTerm,
+      per_page: 100,
+      client_id: config.apiKey
+    };
 
     return imagesApi
       .list(params)

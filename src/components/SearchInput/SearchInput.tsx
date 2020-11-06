@@ -17,6 +17,7 @@ interface ISearchInput {
   loading?: boolean;
   minLength?: number;
   onBlur?: Function;
+  background?: string;
 }
 
 const InputIconClose = observer(({ onClear }) => {
@@ -31,13 +32,14 @@ const InputIconClose = observer(({ onClear }) => {
 });
 
 export const SearchInput = observer(
-  ({ store, minLength = 3, onBlur }: ISearchInput) => {
+  ({ store, minLength = 3, onBlur, background = "#ffffff" }: ISearchInput) => {
     const [searchTerm, setSearchTerm] = useState("");
     const history = useHistory();
 
     const onSubmit = async (e) => {
       e.preventDefault();
-      await store.list({ query: searchTerm });
+
+      store.getSearchTerm(searchTerm);
       history.push("/results");
     };
 
@@ -72,6 +74,7 @@ export const SearchInput = observer(
             type="text"
             placeholder="Search free high-resolution photos"
             value={searchTerm}
+            background={`${background}`}
             onChange={(event) => {
               onChange(event.target.value);
             }}

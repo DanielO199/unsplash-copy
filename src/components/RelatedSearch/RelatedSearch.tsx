@@ -23,7 +23,7 @@ const RelatedSearchItem = observer(({ item: { title } }) => {
   const history = useHistory();
 
   const onSubmit = async () => {
-    await photoStore.list({ query: title });
+    photoStore.getSearchTerm(title);
     history.push("/results");
   };
 
