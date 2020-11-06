@@ -1,0 +1,85 @@
+import React, { useState } from "react";
+import { observer } from "mobx-react";
+import debounce from "lodash/debounce";
+import { useHistory } from "react-router-dom";
+import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
+
+import {
+  InputWrapper,
+  StyledCloseIcon,
+  StyledSearchIcon,
+  Input
+} from "./styles";
+import { grayColor } from "assets/variables";
+
+interface ISearchInput {
+  store: any;
+  loading?: boolean;
+  minLength?: number;
+  onBlur?: Function;
+}
+
+const InputIconClose = observer(({ onClear }) => {
+  return (
+    <StyledCloseIcon
+      icon={faTimes}
+      size="lg"
+      color={grayColor}
+      onClick={onClear}
+    />
+  );
+});
+
+export const SearchInput = observer(
+  ({ store, minLength = 3, onBlur }: ISearchInput) => {
+    const [searchTerm, setSearchTerm] = useState("");
+    const history = useHistory();
+
+    const onSubmit = async (e) => {
+      e.preventDefault();
+      await store.list({ query: searchTerm });
+      history.push("/results");
+    };
+
+    const onSearch = (value: string) => {
+      if (value.length >= minLength || value === "") {
+        store.relatedSearch({ query: value });
+      }
+    };
+
+    const debouncedOnSearch = debounce(onSearch, 500);
+
+    const onChange = (value: string) => {
+      setSearchTerm(value);
+      debouncedOnSearch(value);
+    };
+
+    const onClear = () => {
+      onChange("");
+    };
+
+    return (
+      <form onSubmit={onSubmit}>
+        <InputWrapper>
+          <StyledSearchIcon
+            icon={faSearch}
+            size="lg"
+            color={grayColor}
+            onClick={onSubmit}
+          />
+          <Input
+            role="search"
+            type="text"
+            placeholder="Search free high-resolution photos"
+            value={searchTerm}
+            onChange={(event) => {
+              onChange(event.target.value);
+            }}
+            onBlur={onBlur}
+          />
+          {searchTerm && <InputIconClose onClear={onClear} />}
+        </InputWrapper>
+      </form>
+    );
+  }
+);
