@@ -10,7 +10,7 @@ import { photoStore } from "stores";
 export const PhotosContainer = observer(() => {
   if (photoStore.loading) return <Spinner />;
 
-  if (!photoStore.images.length) return <div>no images</div>;
+  if (!photoStore.images.length) return <div>No images found</div>;
 
   return (
     <>

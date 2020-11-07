@@ -53,6 +53,7 @@ export const SearchInput = observer(
     const onSearch = (value: string) => {
       if (value.length >= minLength || value === "") {
         if (list) {
+          store.getSearchTerm(value);
           store.list({ query: value });
         } else {
           store.relatedSearch({ query: value });
@@ -64,7 +65,6 @@ export const SearchInput = observer(
 
     const onChange = (value: string) => {
       setSearchTerm(value);
-      store.getSearchTerm(value);
       debouncedOnSearch(value);
     };
 
@@ -92,7 +92,7 @@ export const SearchInput = observer(
             }}
             onBlur={onBlur}
           />
-          {searchTerm && <InputIconClose onClear={onClear} />}
+          {searchTerm && !list && <InputIconClose onClear={onClear} />}
         </InputWrapper>
       </form>
     );

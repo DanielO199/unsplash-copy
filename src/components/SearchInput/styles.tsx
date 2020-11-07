@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const InputWrapper = styled.div`
+export const InputWrapper = styled.div`
   position: relative;
   height: 50px;
   margin: 1.5rem 0;
 `;
 
-const StyledCloseIcon = styled(FontAwesomeIcon)`
+export const StyledCloseIcon = styled(FontAwesomeIcon)`
   position: absolute;
   top: 22px;
   right: 20px;
@@ -17,7 +17,7 @@ const StyledCloseIcon = styled(FontAwesomeIcon)`
   }
 `;
 
-const StyledSearchIcon = styled(FontAwesomeIcon)`
+export const StyledSearchIcon = styled(FontAwesomeIcon)`
   position: absolute;
   top: 22px;
   left: 20px;
@@ -27,7 +27,7 @@ const StyledSearchIcon = styled(FontAwesomeIcon)`
   }
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   box-sizing: border-box;
   padding: 0.5rem 3rem;
   margin: 0.5em 0;
@@ -46,5 +46,3 @@ const Input = styled.input`
     transition: 0.3s ease-in;
   }
 `;
-
-export { InputWrapper, StyledCloseIcon, Input, StyledSearchIcon };
