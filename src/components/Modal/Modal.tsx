@@ -75,7 +75,7 @@ export const Modal = ({ item, toggleModal }) => {
                 icon={faInfoCircle}
                 size="1x"
                 color={grayColor}
-              />{" "}
+              />
               Info
             </IconWrapper>
           </Item>

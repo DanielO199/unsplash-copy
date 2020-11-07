@@ -4,3 +4,4 @@ export { Spinner } from "./Spinner/Spinner";
 export { RelatedSearchList } from "./RelatedSearch/RelatedSearch";
 export { PhotosContainer } from "./PhotosContainer/PhotosContainer";
 export { Backdrop } from "./Backdrop/Backdrop";
+export { CarouselContainer } from "./CarouselContainer/CarouselContainer";

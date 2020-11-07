@@ -1,4 +1,4 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, makeObservable } from "mobx";
 
 import { config } from "globals/config";
 import { imagesApi } from "api/imagesApi";
@@ -8,6 +8,8 @@ class PhotoStore {
 
   relatedTerms: [] = [];
 
+  topics: [] = [];
+
   searchTerm: string = "";
 
   images: [] = [];
@@ -16,9 +18,9 @@ class PhotoStore {
     makeObservable(this, {
       loading: observable,
       relatedTerms: observable,
+      topics: observable,
       images: observable,
-      list: action,
-      relatedSearch: action
+      searchTerm: observable
     });
   }
 
@@ -26,19 +28,42 @@ class PhotoStore {
     this.searchTerm = value;
   }
 
-  list() {
+  list(data?) {
     this.loading = true;
 
     const params = {
+      ...data,
       query: this.searchTerm,
       per_page: 100,
       client_id: config.apiKey
     };
 
     return imagesApi
-      .list(params)
+      .photolist(params)
       .then((response) => {
         this.images = response.results;
+        return response;
+      })
+      .catch((err) => {
+        throw err;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
+  }
+
+  topicList() {
+    this.loading = true;
+
+    const params = {
+      per_page: 10,
+      client_id: config.apiKey
+    };
+
+    return imagesApi
+      .topicList(params)
+      .then((response) => {
+        this.topics = response;
         return response;
       })
       .catch((err) => {

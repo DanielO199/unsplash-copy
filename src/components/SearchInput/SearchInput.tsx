@@ -18,6 +18,7 @@ interface ISearchInput {
   minLength?: number;
   onBlur?: Function;
   background?: string;
+  list?: boolean;
 }
 
 const InputIconClose = observer(({ onClear }) => {
@@ -32,7 +33,13 @@ const InputIconClose = observer(({ onClear }) => {
 });
 
 export const SearchInput = observer(
-  ({ store, minLength = 3, onBlur, background = "#ffffff" }: ISearchInput) => {
+  ({
+    store,
+    minLength = 3,
+    onBlur,
+    background = "#ffffff",
+    list
+  }: ISearchInput) => {
     const [searchTerm, setSearchTerm] = useState("");
     const history = useHistory();
 
@@ -45,7 +52,11 @@ export const SearchInput = observer(
 
     const onSearch = (value: string) => {
       if (value.length >= minLength || value === "") {
-        store.relatedSearch({ query: value });
+        if (list) {
+          store.list({ query: value });
+        } else {
+          store.relatedSearch({ query: value });
+        }
       }
     };
 
@@ -53,6 +64,7 @@ export const SearchInput = observer(
 
     const onChange = (value: string) => {
       setSearchTerm(value);
+      store.getSearchTerm(value);
       debouncedOnSearch(value);
     };
 
